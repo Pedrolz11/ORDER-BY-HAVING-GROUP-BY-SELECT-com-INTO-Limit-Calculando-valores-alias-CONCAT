@@ -1,0 +1,28 @@
+BLOCO 1
+
+1- SELECT CONCAT ('Produto: ', ProductName,  ' - ', Price * 2) AS Calculo
+   FROM Products
+   LIMIT 10;
+
+2- SELECT CONCAT ('Produto: ', ProductName,' ', 'Custa: ', Price, ' Euros') AS MaisBaratos
+   FROM Products
+   ORDER BY Price ASC
+   LIMIT 5;
+
+3- SELECT CONCAT (OrderDetailID, Quantity * 10, ' - Valor Total') AS Encomenda
+   FROM OrderDetails
+   LIMIT 15;
+
+4- SELECT CONCAT (FirstName, ' ', LastName, ' - Funcionario Senai') AS Senai
+   FROM Employees
+   LIMIT 3;
+
+5- SELECT CONCAT ('Produto: ', ProductName,  ' - ', Price * 0.85) AS Desconto
+   FROM Products
+   ORDER BY Price DESC
+   LIMIT 8;
+
+6- SELECT CONCAT (CustomerName, ' - ', City) AS OrdemAlfabetica
+   FROM Customers
+   ORDER BY CustomerName ASC
+   LIMIT 12;
