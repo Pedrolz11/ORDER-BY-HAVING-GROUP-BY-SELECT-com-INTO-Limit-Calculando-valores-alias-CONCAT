@@ -1,4 +1,4 @@
-BLOCO 1
+BLOCO 1 (CONCAT, Cálculos e LIMIT)
 
 1- SELECT CONCAT ('Produto: ', ProductName,  ' - ', Price * 2) AS Calculo
    FROM Products
@@ -26,3 +26,238 @@ BLOCO 1
    FROM Customers
    ORDER BY CustomerName ASC
    LIMIT 12;
+
+7- SELECT CONCAT ('Diferenca: ', (Quantity - 100)) AS StockIdeal
+   FROM OrderDetails
+   LIMIT 20;
+
+8- SELECT CONCAT (CategoryName, ' - ', Description) AS Categoria
+   FROM Categories
+   LIMIT 5;
+
+9- SELECT CONCAT((SELECT SupplierName FROM Suppliers WHERE Suppliers.SupplierID = Products.SupplierID),' - ',Price * 50) AS Custo50Unidades
+   FROM Products
+   LIMIT 10;
+
+10- SELECT CONCAT (Address, ' - ', City, ' - ', PostalCode, '  ') AS MoradaCompleta
+    FROM Customers
+    LIMIT 25;
+
+BLOCO 2 (GROUP BY, COUNT e LIMIT)
+
+11- SELECT City, COUNT(*) AS TotalClientes
+    FROM Customers
+    GROUP BY City
+    ORDER BY TotalClientes DESC
+    LIMIT 5;
+
+12- SELECT CategoryID, COUNT(*) AS Total
+    FROM Products
+    GROUP BY CategoryID
+    LIMIT 3;
+
+13- SELECT EmployeeID, COUNT(*) AS Total
+    FROM Orders
+    GROUP BY EmployeeID
+    ORDER BY Total DESC
+    LIMIT 5;
+
+14- SELECT Country, COUNT(*) AS Total
+    FROM Suppliers
+    GROUP BY Country
+    LIMIT 10;
+
+15- SELECT OrderID, COUNT(*) AS Total
+    FROM OrderDetails
+    GROUP BY OrderID
+    LIMIT 15;
+
+16- SELECT City, COUNT(*) AS Total
+    FROM Shippers
+    GROUP BY City
+    LIMIT 2;
+
+17- SELECT SupplierID, COUNT(*) AS Total
+    FROM Products
+    GROUP BY SupplierID
+    LIMIT 5;
+
+18- SELECT OrderDate, COUNT(*) AS Total
+    FROM Orders 
+    GROUP BY OrderDate
+    ORDER BY Total DESC
+    LIMIT 10;
+
+19- SELECT PostalCode, COUNT(*) AS Total
+    FROM Customers
+    GROUP BY PostalCode
+    ORDER BY Total DESC
+    LIMIT 8;
+
+20- SELECT COUNT(DISTINCT CategoryID) AS Total
+    FROM Products;
+
+BLOCO 3 (GROUP BY, HAVING e COUNT)
+
+21- SELECT Country, COUNT(*) AS TotalClientes
+    FROM Customers
+    GROUP BY Country
+    HAVING COUNT(*) > 5;
+
+22- SELECT EmployeeID, COUNT(*) AS Total
+    FROM Orders
+    GROUP BY EmployeeID
+    HAVING COUNT(*) > 10;
+
+23- SELECT CategoryID, COUNT(*) AS Total
+    FROM Products
+    GROUP BY CategoryID
+    HAVING COUNT(*) > 12;
+
+24- SELECT City, COUNT(*) AS Total
+    FROM Suppliers
+    GROUP BY City
+    HAVING COUNT(*) = 2;
+
+25- SELECT OrderID, COUNT(*) AS Total
+    FROM OrderDetails
+    GROUP BY OrderID
+    HAVING COUNT(*) > 3;
+
+26- SELECT City, COUNT(*) AS Total
+    FROM Customers
+    GROUP BY City
+    HAVING COUNT(*) > 3;
+
+27- SELECT SupplierID, COUNT(*) AS Total
+    FROM Products
+    GROUP BY SupplierID
+    HAVING COUNT(*) < 5;
+
+28- SELECT Total, COUNT(*) AS Quantidade
+    FROM ( SELECT CategoryID, COUNT(*) AS Total
+    FROM Products
+    GROUP BY CategoryID ) AS Categorias
+    GROUP BY Total
+    HAVING COUNT(*) > 1;
+
+29- SELECT YEAR(BirthDate) AS Ano,
+    COUNT(*) AS Total
+    FROM Employees
+    GROUP BY YEAR(BirthDate)
+    HAVING COUNT(*) > 1;
+
+30- SELECT Country, COUNT(*) AS Total
+    FROM Shippers
+    GROUP BY Country
+    HAVING COUNT(*) > 1;
+
+BLOCO 4 (SELECT INTO)
+
+31- SELECT * INTO TopClientes_Senai
+    FROM Customers
+    LIMIT 10;
+
+32- SELECT * INTO Produtos
+    FROM Products
+    WHERE Price > 50;
+
+33- SELECT *
+    INTO BackupCategorias
+    FROM Categories;
+
+34- SELECT LastName, FirstName
+    INTO EquipaVendas
+    FROM Employees;
+
+35- SELECT *
+    INTO EncomendasRecentes
+    FROM Orders
+    ORDER BY OrderDate DESC
+    LIMIT 20;
+
+36- SELECT *
+    INTO FornecedoresNacionais
+    FROM Suppliers
+    WHERE City = 'London';
+
+37- SELECT ShipperName, Phone
+    INTO ContactosTransporte
+    FROM Shippers;
+
+38- SELECT *
+    INTO DetalhesGrandes
+    FROM OrderDetails
+    WHERE Quantity > 50;
+
+39- SELECT CustomerName, ContactName
+    INTO MailingList
+    FROM Customers;
+
+40- SELECT *
+    INTO ProdutosInativos
+    FROM Products
+    WHERE Price = 0
+    OR Price IS NULL;
+
+BLOCO 5 O Desafio Final - A Mescla Total (Senai Master)
+
+41- SELECT CONCAT ('Categoria No: ', CategoryID) AS Categoria,
+    COUNT(*) AS Total
+    FROM Products
+    GROUP BY CategoryID
+    HAVING COUNT(*) > 5
+    LIMIT 3;
+
+42- SELECT OrderID, SUM(Quantity) AS TotalItens
+    INTO ResumoEncomendas
+    FROM OrderDetails
+    GROUP BY OrderID;
+
+43- SELECT CONCAT(FirstName, ' ', LastName) AS NomeCompleto
+    INTO VeteranosSenai
+    FROM Employees
+    ORDER BY BirthDate
+    LIMIT 5;
+
+44- SELECT City, COUNT(*) AS TotalClientes
+    INTO CidadesEstrategicas
+    FROM Customers
+    GROUP BY City
+    HAVING COUNT(*) > 2
+    LIMIT 5;
+
+45- SELECT CONCAT('Produto: ', ProductName, ' IVA: ', Price * 0.23) AS Resultado
+    FROM Products
+    LIMIT 15;
+
+46- SELECT ProductID, AVG(Quantity) AS MediaQuantidade
+    FROM OrderDetails
+    GROUP BY ProductID
+    HAVING AVG(Quantity) > 20;
+
+47- SELECT CONCAT(SupplierName, ' - ', ContactName) AS Contacto
+    INTO ContactosFornecedores
+    FROM Suppliers
+    LIMIT 10;
+
+48- SELECT EmployeeID, COUNT(*) AS TotalEncomendas
+    FROM Orders
+    GROUP BY EmployeeID
+    HAVING COUNT(*) * 2 > 50;
+
+49- SELECT ShipperID, COUNT(*) AS TotalEncomendas
+    INTO ResumoTransportes
+    FROM Orders
+    GROUP BY ShipperID
+    LIMIT 2;
+
+50- SELECT CONCAT(FirstName, ' ', LastName) AS Funcionario,
+    COUNT(*) AS TotalEncomendas
+    INTO RelatorioFinal
+    FROM Employees
+    INNER JOIN Orders
+    ON Employees.EmployeeID = Orders.EmployeeID
+    GROUP BY Employees.EmployeeID, FirstName, LastName
+    HAVING COUNT(*) > 5
+    LIMIT 3;
